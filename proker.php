@@ -1,3 +1,7 @@
+<?php
+session_start ();
+include "koneksi.php";
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -26,13 +30,14 @@ function clearText(field)
     
     	<div id="templatemo_sidebar">
         	
-            <div id="site_title"><h1><a href="http://www.templatemo.com"></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
+           <div id="site_title"><h1><img src="images/smp_logo.jpg" width="220px" height="300px" /></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
             
             <div id="templatemo_menu">
                 <ul>
                     <li><a href="index.php">Home</a></li>
 					<li><a href="profil.php">Profil</a></li>
 					<li><a href="berita.php">Berita</a></li>
+					<li><a href="artikel.php">Artikel</a></li>
                     <li><a href="galery.php">Gallery</a></li> 
 					<li><a href="Struktur.php">Struktur Organisasi</a></li>					
                     <li><a href="forum.php">Forum</a></li>
@@ -50,25 +55,18 @@ function clearText(field)
 				</div>
             </div>-->
             
-            <div class="sb_box">
-            	<h3>Contact</h3>
-                <!--<div id="contact_form">
-                    <form action="#" method="post">
-                    
-                        <label for="author">Name:</label> 
-                        <input type="text" id="author" name="author" class="required input_field" />
-                    
-                      	<label for="email">Email:</label>
-                        <input type="text" id="email" name="email" class="validate-email required input_field" />
-                        
-                        <label for="subject">Subject:</label> 
-                        <input type="text" id="subject" name="subject" class="input_field" />
-            
-                        <label for="text">Message:</label> <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
-                        <input type="submit" id="submit" class="float_l" name="submit" value="Send" />
-                        
-                    </form>
-				</div>-->
+           <div class="sb_box">
+            	<h3>Kontak</h3>
+				<?php	
+						
+						$sql = mysql_query("SELECT * FROM t_kontak");
+						while ($data = mysql_fetch_array($sql)){
+						list($idkontak,$alamat,$notlp,$email)=$data; 
+				?>
+						<p> Alamat : <?php echo $data['alamat']; ?></p>
+						<p> No Telepon : <?php echo $data['no_tlp']; ?></p>
+						<p> Email :<?php echo $data['email']; } ?></p>
+				
             </div>
 			
             <div class="cleaner"></div>

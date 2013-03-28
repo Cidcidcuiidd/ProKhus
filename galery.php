@@ -1,3 +1,7 @@
+<?php
+session_start ();
+include "koneksi.php";
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -38,13 +42,14 @@ $(function() {
     
     	<div id="templatemo_sidebar">
         	
-            <div id="site_title"><h1><a href="http://www.templatemo.com"></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
+            <div id="site_title"><h1><img src="images/smp_logo.jpg" width="220px" height="300px" /></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
             
             <div id="templatemo_menu">
                 <ul>
                     <li><a href="index.php">Home</a></li>
 					<li><a href="profil.php">Profil</a></li>
 					<li><a href="berita.php">Berita</a></li>
+					<li><a href="artikel.php">Artikel</a></li>
                     <li><a href="galery.php" class="current">Gallery</a></li> 
 					<li><a href="Struktur.php">Struktur Organisasi</a></li>					
                     <li><a href="forum.php">Forum</a></li>
@@ -63,24 +68,17 @@ $(function() {
             </div>-->
             
             <div class="sb_box">
-            	<h3>Contact</h3>
-                <!--<div id="contact_form">
-                    <form action="#" method="post">
-                    
-                        <label for="author">Name:</label> 
-                        <input type="text" id="author" name="author" class="required input_field" />
-                    
-                      	<label for="email">Email:</label>
-                        <input type="text" id="email" name="email" class="validate-email required input_field" />
-                        
-                        <label for="subject">Subject:</label> 
-                        <input type="text" id="subject" name="subject" class="input_field" />
-            
-                        <label for="text">Message:</label> <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
-                        <input type="submit" id="submit" class="float_l" name="submit" value="Send" />
-                        
-                    </form>
-				</div>-->
+            	<h3>Kontak</h3>
+				<?php	
+						
+						$sql = mysql_query("SELECT * FROM t_kontak");
+						while ($data = mysql_fetch_array($sql)){
+						list($idkontak,$alamat,$notlp,$email)=$data; 
+				?>
+						<p> Alamat : <?php echo $data['alamat']; ?></p>
+						<p> No Telepon : <?php echo $data['no_tlp']; ?></p>
+						<p> Email :<?php echo $data['email']; } ?></p>
+				
             </div>
 			
             <div class="cleaner"></div>
@@ -94,47 +92,33 @@ $(function() {
                         <li>
                             <a href="images/gallery/image_01_l.jpg" class="lightbox" title="Project One">
                             <img src="images/gallery/image_01_s.jpg" alt="Image 1" />
-                            </a>
-                            <span>Project One</span>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum lacinia felis et aliquet. Vivamus imperdiet tortor ac purus blandit. 
-                            <a href="#">More...</a>
-                        
+                            </a>                        
                         </li>
                         <li>
-                        <a href="images/gallery/image_02_l.jpg" class="lightbox" title="Project Two">
-                        <img src="images/gallery/image_02_s.jpg" alt="Image 2" />
-                        </a>
-                        <span>Project Two</span>
-                        Maecenas rutrum lacinia felis et aliquet. Ut nibh mauris, accumsan at rutrum molestie, mollis quis neque. Nunc vitae sagittis sem.  <a href="#">More...</a>
+							<a href="images/gallery/image_02_l.jpg" class="lightbox" title="Project Two">
+							<img src="images/gallery/image_02_s.jpg" alt="Image 2" />
+							</a>
                         </li>
                         <li>
-                        <a href="images/gallery/image_03_l.jpg" class="lightbox" title="Project Three.">
-                        <img src="images/gallery/image_03_s.jpg" alt="Image 3" />
-                        </a>
-                        <span>Project Three</span>
-                        Ut nibh mauris, accumsan at rutrum molestie, mollis quis neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">More...</a>
+							<a href="images/gallery/image_03_l.jpg" class="lightbox" title="Project Three.">
+							<img src="images/gallery/image_03_s.jpg" alt="Image 3" />
+							</a>
                         </li>
                         <li>
-                        <a href="images/gallery/image_04_l.jpg" class="lightbox" title="Project Four">
-                        <img src="images/gallery/image_04_s.jpg" alt="Image 4" />
-                        </a>
-                        <span>Project Four</span>
-                        Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow"><strong>XHTML</strong></a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow"><strong>CSS</strong></a>. Duis eu lectus et ante accumsan auctor. Sed nisi dui, pulvinar nec pretium ut, gravida a lectus. Quisque euismod.  <a href="#">More...</a>
+							<a href="images/gallery/image_04_l.jpg" class="lightbox" title="Project Four">
+							<img src="images/gallery/image_04_s.jpg" alt="Image 4" />
+							</a>
+                       </li>
+                        <li>
+							<a href="images/gallery/image_05_l.jpg" class="lightbox" title="Project Five">
+							<img src="images/gallery/image_05_s.jpg" alt="Image 5" />
+							</a>
                         </li>
                         <li>
-                        <a href="images/gallery/image_05_l.jpg" class="lightbox" title="Project Five">
-                        <img src="images/gallery/image_05_s.jpg" alt="Image 5" />
-                        </a>
-                        <span>Project Five</span>
-                        Nulla facilisi. Phasellus elementum, nulla at rutrum feugiat, metus sapien ultricies ante, nec viverra purus risus sit amet libero. <a href="#">More...</a>
-                        </li>
-                        <li>
-                        <a href="images/gallery/image_06_l.jpg" class="lightbox" title="Project Six">
-                        <img src="images/gallery/image_06_s.jpg" alt="Image 6" />
-                        </a>
-                        <span>Project Six</span>
-                        Suspendisse condimentum quam at est malesuada porttitor. Praesent bibendum dictum pulvinar. Proin eget posuere magna. <a href="#">More...</a>
-                        </li>
+							<a href="images/gallery/image_06_l.jpg" class="lightbox" title="Project Six">
+							<img src="images/gallery/image_06_s.jpg" alt="Image 6" />
+							</a>
+                       </li>
                     </ul>  
                 </div><!-- end of gallery -->
             </div> <!-- end of content box -->

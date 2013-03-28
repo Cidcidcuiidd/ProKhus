@@ -1,3 +1,7 @@
+<?php
+session_start ();
+include "koneksi.php";
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -53,13 +57,14 @@ $(window).load(function() {
     
     	<div id="templatemo_sidebar">
         	
-            <div id="site_title"><h1><a href="http://www.templatemo.com"></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
+            <div id="site_title"><h1><img src="images/smp_logo.jpg" width="220px" height="300px" /></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
             
             <div id="templatemo_menu">
                 <ul>
                     <li><a href="index.php">Home</a></li>
 					<li><a href="profil.php" class="current">Profil</a></li>
 					<li><a href="berita.php">Berita</a></li>
+					<li><a href="artikel.php">Artikel</a></li>
                     <li><a href="galery.php">Gallery</a></li> 
 					<li><a href="Struktur.php">Struktur Organisasi</a></li>					
                     <li><a href="forum.php">Forum</a></li>
@@ -67,85 +72,35 @@ $(window).load(function() {
                 </ul>    	
 			</div>
             
-            <!--<div class="sb_box">
-	            <h3>Search</h3>
-            	<div id="search">
-                    <form action="#" method="get">
-                        <input type="text" value="Search" name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
-                        <input type="submit" name="Search" value="Search" id="searchbutton" title="Search" />
-                    </form>
-				</div>
-            </div>-->
-            
             <div class="sb_box">
-            	<h3>Contact Form</h3>
-                <!--<div id="contact_form">
-                    <form action="#" method="post">
-                    
-                        <label for="author">Name:</label> 
-                        <input type="text" id="author" name="author" class="required input_field" />
-                    
-                      	<label for="email">Email:</label>
-                        <input type="text" id="email" name="email" class="validate-email required input_field" />
-                        
-                        <label for="subject">Subject:</label> 
-                        <input type="text" id="subject" name="subject" class="input_field" />
-            
-                        <label for="text">Message:</label> <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
-                        <input type="submit" id="submit" class="float_l" name="submit" value="Send" />
-                        
-                    </form>
-				</div>-->
+            	<h3>Kontak</h3>
+				<?php	
+						$sql = mysql_query("SELECT * FROM t_kontak");
+						while ($data = mysql_fetch_array($sql)){
+						list($idkontak,$alamat,$notlp,$email)=$data; 
+				?>
+						<p> Alamat : <?php echo $data['alamat']; ?></p>
+						<p> No Telepon : <?php echo $data['no_tlp']; ?></p>
+						<p> Email :<?php echo $data['email']; } ?></p>
+				
             </div>
 			
             <div class="cleaner"></div>
         </div> <!-- end of sidebar -->
         
         <div id="templatemo_content">
-        	
-           <!-- <div id="slider">
-            	<a href="#"><img src="images/slideshow/01.jpg" alt="Image 1" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." /></a><a href="#"><img src="images/slideshow/02.jpg" alt="" title="Nullam ante leo, consectetur eget adipiscing et." /></a>
-                <a href="#"><img src="images/slideshow/03.jpg" alt="Image 2" title="Suspendisse sit amet enim elit. Curabitur tempor consequat." /></a>
-                <a href="#"><img src="images/slideshow/04.jpg" alt="Image 3" title="Nulla faucibus luctus quam eget placerat. " /></a>
-                <a href="#"><img src="images/slideshow/05.jpg" alt="Image 4" title="Phasellus aliquet viverra posuere. " /></a>
-        	</div>-->
             
             <div class="content_box">
             	<h2>Profil Osis SMP Negeri 3 Sleman</h2>
-                <p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</em> Mauris iaculis nulla vitae ante congue iaculis. Nunc vitae sapien sed neque porttitor egestas sit amet ut ligula. Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow"><strong>XHTML</strong></a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow"><strong>CSS</strong></a>.</p>
-              <p><a href="http://www.templatemo.com" target="_parent">templatemo.com</a> provides a lot of high quality <a href="http://www.templatemo.com/page/1" target="_parent">free css templates</a> for your personal or commercial websites. Credit goes to <a href="http://www.photovaco.com/" target="_blank">Free Photos</a> for photos used in this template.</p>
-              <a class="more" href="#"></a>
-            </div>
-            
-            <div class="content_box">
-            	<div class="col_w280 float_l">
-                    <h3>Our Services</h3>
-                  <p><em>Nullam ut neque neque. Suspendisse ac commodo libero. Sed aliquam mauris vel mi feugiat interdum.</em> Etiam ut nibh et urna cursus ultricies nec vel nunc. In hac habitasse platea dictumst. In pretium eleifend arcu, sit amet faucibus nunc egestas ac. </p>
-                    <ul class="tmo_list">
-                        <li><a href="#">In pellentesque sagittis dictum</a></li>
-                        <li><a href="#">Ut rhoncus imperdiet nibh</a></li>
-                        <li><a href="#">Sed tellus diam, consequat</a></li>
-                        <li><a href="#">Mauris in risus in diam consequat</a></li>
-                        <li><a href="#">Mauris suscipit mauris in purus</a></li>
-                    </ul>
-                    <a class="more" href="#"></a>
-                </div>
-                
-                <div class="col_w280 float_r">
-                	<h3>Latest Updates</h3>
-                    <ul class="lbe_list">
-                        <li><a href="#">Nullam eget magna tellus<span>May 30</span></a></li>
-                        <li><a href="#">Quisque a sapien tortor<span>May 28</span></a></li>
-                        <li><a href="#">Aenean sit amet libero augue<span>May 26</span></a></li>
-                        <li><a href="#">Suscipit tincidunt gravida<span>May 25</span></a></li>
-                        <li><a href="#"> Phasellus ac est in neque <span>May 23</span></a></li>
-                        <li><a href="#"> Vestibulum sagittis risus <span>May 20</span></a></li>
-                        <li><a href="#"> Cras varius rutrum pharetra <span>May 18</span></a></li>
-                        <li><a href="#"> Donec placerat arcu eget  <span>May 16</span></a></li>
-                        <li><a href="#"> Sed eget ligula felis <span>May 13</span></a></li>
-                        <li><a href="#">Diam accumsan a auctor metus<span>May 10</span></a></li>
-                    </ul>
-                </div>
+				<?php	
+						$sql = mysql_query("SELECT * FROM profil");
+						while ($data = mysql_fetch_array($sql)){
+						list($idprofil,$visi,$misi)=$data; 
+				?>
+						<h1 align="center"> VISI </h1>
+						<p align="center"><?php echo $data['visi']; ?></p>
+						<h1 align="center"> MISI </h1>
+						<p align="center"><?php echo $data['misi']; }?></p>			
             </div>
         
         </div> <!-- end of content -->

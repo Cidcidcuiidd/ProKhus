@@ -1,3 +1,7 @@
+<?php
+session_start ();
+include "koneksi.php";
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -26,13 +30,14 @@ function clearText(field)
     
     	<div id="templatemo_sidebar">
         	
-            <div id="site_title"><h1><a href="http://www.templatemo.com"></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
+            <div id="site_title"><h1><img src="images/smp_logo.jpg" width="220px" height="300px" /></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
             
             <div id="templatemo_menu">
                 <ul>
                     <li><a href="index.php">Home</a></li>
 					<li><a href="profil.php">Profil</a></li>
 					<li><a href="berita.php" class="current">Berita</a></li>
+					<li><a href="artikel.php">Artikel</a></li>
                     <li><a href="galery.php">Gallery</a></li> 
 					<li><a href="Struktur.php">Struktur Organisasi</a></li>					
                     <li><a href="forum.php">Forum</a></li>
@@ -51,64 +56,86 @@ function clearText(field)
             </div>-->
             
             <div class="sb_box">
-            	<h3>Contact</h3>
-                <!--<div id="contact_form">
-                    <form action="#" method="post">
-                    
-                        <label for="author">Name:</label> 
-                        <input type="text" id="author" name="author" class="required input_field" />
-                    
-                      	<label for="email">Email:</label>
-                        <input type="text" id="email" name="email" class="validate-email required input_field" />
-                        
-                        <label for="subject">Subject:</label> 
-                        <input type="text" id="subject" name="subject" class="input_field" />
-            
-                        <label for="text">Message:</label> <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
-                        <input type="submit" id="submit" class="float_l" name="submit" value="Send" />
-                        
-                    </form>
-				</div>-->
+            	<h3>Kontak</h3>
+				<?php	
+						
+						$sql = mysql_query("SELECT * FROM t_kontak");
+						while ($data = mysql_fetch_array($sql)){
+						list($idkontak,$alamat,$notlp,$email)=$data; 
+				?>
+						<p> Alamat : <?php echo $data['alamat']; ?></p>
+						<p> No Telepon : <?php echo $data['no_tlp']; ?></p>
+						<p> Email :<?php echo $data['email']; } ?></p>
+				
             </div>
 			
             <div class="cleaner"></div>
         </div> <!-- end of sidebar -->
         
         <div id="templatemo_content">
-        	
             <div class="news_box">
-                <h2>Sed mollis elementum lectus rhoncus</h2>
-                <p class="date">March 28, 2048</p>
-                <img src="images/news_image_01.jpg" alt="Image" />
-                <p>Nunc varius venenatis sem sed adipiscing. Mauris suscipit mauris in purus mattis placerat. Ut rhoncus imperdiet nibh sit amet sagittis. Aliquam erat volutpat. In pellentesque sagittis dictum. Aliquam erat volutpat.</p>
-                <a class="more" href="#"></a>
-                <div class="cleaner"></div>
-            </div>
-            <div class="news_box">
-                <h2>Duis eu lectus et ante accumsan auctor</h2>
-                <p class="date">March 24, 2048</p>
-                <img src="images/news_image_02.jpg" alt="Image" />
-                <p> Aliquam erat volutpat. In pellentesque sagittis dictum. Aliquam erat volutpat. Donec ac aliquam neque. Sed tellus diam, consequat nec volutpat et, cursus ac nisi. Mauris in risus in diam consequat suscipit non ac enim.</p>
-                <a class="more" href="#"></a>
-                <div class="cleaner"></div>
-            </div>
-            <div class="news_box">
-                <h2>Aenean vulputate tempus sollicitudin</h2>
-                <p class="date">March 20, 2048</p>
-                <img src="images/news_image_03.jpg" alt="Image" />
-                <p>Mauris suscipit mauris in purus mattis placerat. Ut rhoncus imperdiet nibh sit amet sagittis. Aliquam erat volutpat. In pellentesque sagittis dictum. Aliquam erat volutpat. Donec ac aliquam neque. Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow"><strong>XHTML</strong></a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow"><strong>CSS</strong></a>.</p>
-                <a class="more" href="#"></a>
-                <div class="cleaner"></div>
-            </div>
-            <div class="news_box">
-                <h2>Fusce vehicula consequat dignissim</h2>
-                <p class="date">March 18, 2048</p>
-                <img src="images/news_image_04.jpg" alt="Image" />
-                <p>Ut rhoncus imperdiet nibh sit amet sagittis. Aliquam erat volutpat. In pellentesque sagittis dictum. Aliquam erat volutpat. Donec ac aliquam neque. Sed tellus diam, consequat nec volutpat et, cursus ac nisi.</p>
-                <a class="more" href="#"></a>
-                <div class="cleaner"></div>
-            </div>
-        
+						<?php
+						$dataPerPage = 5;
+
+							// apabila $_GET['page'] sudah didefinisikan, gunakan nomor halaman tersebut,
+							// sedangkan apabila belum, nomor halamannya 1.
+							if(isset($_GET['page']))
+							{
+								$noPage = $_GET['page'];
+							}
+							else $noPage = 1;
+
+							// perhitungan offset
+							$offset = ($noPage - 1) * $dataPerPage;
+
+							// query SQL untuk menampilkan data perhalaman sesuai offset
+							$query = "SELECT * FROM t_berita LIMIT $offset, $dataPerPage";
+							$result = mysql_query($query) or die('Error');
+
+							// menampilkan data 
+							while($data = mysql_fetch_array($result))
+							{	
+								list($idberita,$tgl,$gbrberita,$judul,$isi)=$data;
+								$isi2=substr($isi,0,150);	
+								$isi3=substr($isi2,0,strrpos($isi2," "));
+								echo "<h2>".$data ['judul_berita']."</h2>";
+								echo "<p class='date'>". $data ['tgl_berita']."</p>";
+								echo '<img src="images/'.$data ['gbr_berita'].'" width="160" height="160"/>';
+								echo "<p>" .$isi2. "</p><br></br>";							
+								echo '<p align="right" >' ."<a href='berita2.php?page=$idberita'>Continue Reading &raquo </a>". '</p><br></br>';
+							}
+
+							// mencari jumlah semua data dalam tabel guestbook
+							$query   = "SELECT COUNT(*) AS jumData FROM t_berita";
+							$hasil  = mysql_query($query);
+							$data     = mysql_fetch_array($hasil);
+							$jumData = $data['jumData'];
+
+							// menentukan jumlah halaman yang muncul berdasarkan jumlah semua data
+							$jumPage = ceil($jumData/$dataPerPage);
+
+							// menampilkan link previous
+							echo"<center>";
+							if ($noPage > 1) echo  "<a href='".$_SERVER['PHP_SELF']."?page=".($noPage-1)."'>&lt;&lt; Prev</a>";
+
+							// memunculkan nomor halaman dan linknya
+							for($page = 1; $page <= $jumPage; $page++)
+							{
+									 if ((($page >= $noPage - 3) && ($page <= $noPage + 3)) || ($page == 1) || ($page == $jumPage))
+									 {
+										if (($showPage == 1) && ($page != 2))  echo "...";
+										if (($showPage != ($jumPage - 1)) && ($page == $jumPage))  echo "...";
+										if ($page == $noPage) echo " <b>".$page."</b> ";
+										else echo " <a href='".$_SERVER['PHP_SELF']."?page=".$page."'>".$page."</a> ";
+										$showPage = $page;
+									 }
+							}
+
+							// menampilkan link next
+							if ($noPage < $jumPage) echo "<a href='".$_SERVER['PHP_SELF']."?page=".($noPage+1)."'>Next &gt;&gt;</a>";
+							echo"</center>";
+							?>
+				</div>      
         </div> <!-- end of content -->
     	<div class="cleaner"></div>
     </div> <!-- end of main -->

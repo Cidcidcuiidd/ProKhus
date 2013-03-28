@@ -24,46 +24,34 @@ function clearText(field)
 
 <div id="templamteo_body_wrapper">
 <div id="templatemo_wrapper">
-<p align="right"><a href="index.php">Kembali ke Home</a></p>
+<p align="right"><a href="index.php">Logout</a></p>
 	<div id="templatemo_main_top"></div>
     <div id="templatemo_main">
     
     	<div id="templatemo_sidebar">
         	
             <div id="site_title"><h1><img src="images/smp_logo.jpg" width="220px" height="300px" /></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
-            <div class="cleaner"></div>
+            <div class="cleaner"></div>	
+			
+			<div id="templatemo_menu">
+				<ul>
+					<li><a href="admin1profil.php">Profil</a></li>
+					<li><a href="admin1struktur.php">Struktur Organisasi</a></li>
+					<li><a href="admin1adat.php">Artikel</a></li>
+					<li><a href="admin1proker.php">Program Kerja</a></li>
+					<li><a href="admin1adat.php">Adat Osis</a></li>
+					<li><a href="admin1mars.php">Mars</a></li>
+					<li><a href="admin1kontak.php">Kontak</a></li>
+				</ul>
+			</div>
         </div> <!-- end of sidebar -->
-        
+		
         <div id="templatemo_content">
         	<div class="content_box">
-				<h2> Anda Memasuki Kawasan Admin </h2>	
-				<div id="cp_contact_form">
-					<h3> Silahkan Login </h3>                                     
-                    
-                    <form method="post" action="proses_login.php" onsubmit="return validate(this);">
-						
-                            <label for="author">Username:</label> <input name="author" type="text" class="input_field" id="author" maxlength="60" />
-                          	<div class="cleaner_h10"></div>
-                            
-                            <label for="pass">Password:</label> <input name="pass" type="password" class="input_field" id="pass" maxlength="60" />
-                          	<div class="cleaner_h10"></div>
-							
-							<?php
-								echo "<label>Level: &nbsp;</label>";
-								echo "<select name='level'>
-									<option value='1'>SUPER ADMIN</option>
-									<option value='2'>ADMIN1</option>
-									<option value='3'>ADMIN2</option>
-									</select>"
-							?> </br><br>
-                                                      
-                            <input type="submit" class="submit_btn float_l" name="submit" id="submit" value="Login" />
-                            <input type="reset" class="submit_btn float_r" name="reset" id="reset" value="Reset" /></br><br>
-						                        
-                   </form>
-    
-                </div>
-			</div>
+			
+				<h3 align="center"> Selamat Datang Admin 1</h3>			
+				
+			</div>			
         </div> <!-- end of content -->
     	<div class="cleaner"></div>
     </div> <!-- end of main -->

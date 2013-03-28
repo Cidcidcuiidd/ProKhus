@@ -1,3 +1,7 @@
+<?php
+session_start ();
+include "koneksi.php";
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -26,55 +30,47 @@ function clearText(field)
     
     	<div id="templatemo_sidebar">
         	
-            <div id="site_title"><h1><a href="http://www.templatemo.com"></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
+            <div id="site_title"><h1><img src="images/smp_logo.jpg" width="220px" height="300px" /></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
             
             <div id="templatemo_menu">
                 <ul>
                     <li><a href="index.php">Home</a></li>
 					<li><a href="profil.php">Profil</a></li>
 					<li><a href="berita.php">Berita</a></li>
+					<li><a href="artikel.php">Artikel</a></li>
                     <li><a href="galery.php">Gallery</a></li> 
 					<li><a href="Struktur.php" class="current">Struktur Organisasi</a></li>					
                     <li><a href="forum.php">Forum</a></li>
                     <li><a href="kontak.php">Kontak</a></li> 	
 			</div>
             
-            <!--<div class="sb_box">
-	            <h3>Search</h3>
-            	<div id="search">
-                    <form action="#" method="get">
-                        <input type="text" value="Search" name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
-                        <input type="submit" name="Search" value="Search" id="searchbutton" title="Search" />
-                    </form>
-				</div>
-            </div>-->
-            
             <div class="sb_box">
-            	<h3>Contact</h3>
-                <!--<div id="contact_form">
-                    <form action="#" method="post">
-                    
-                        <label for="author">Name:</label> 
-                        <input type="text" id="author" name="author" class="required input_field" />
-                    
-                      	<label for="email">Email:</label>
-                        <input type="text" id="email" name="email" class="validate-email required input_field" />
-                        
-                        <label for="subject">Subject:</label> 
-                        <input type="text" id="subject" name="subject" class="input_field" />
-            
-                        <label for="text">Message:</label> <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
-                        <input type="submit" id="submit" class="float_l" name="submit" value="Send" />
-                        
-                    </form>
-				</div>-->
+            	<h3>Kontak</h3>
+				<?php	
+						include "koneksi.php";
+						$sql = mysql_query("SELECT * FROM t_kontak");
+						while ($data = mysql_fetch_array($sql)){
+						list($idkontak,$alamat,$notlp,$email)=$data; 
+				?>
+						<p> Alamat : <?php echo $data['alamat']; ?></p>
+						<p> No Telepon : <?php echo $data['no_tlp']; ?></p>
+						<p> Email :<?php echo $data['email']; } ?></p>
+				
             </div>
 			
             <div class="cleaner"></div>
         </div> <!-- end of sidebar -->
         
         <div id="templatemo_content">
-        	
+        	 <div class="content_box">
+            	<h2>Struktur Organisasi</h2>
+			 </div> 
+				<p>Tahun Jabatan : </p>
+				<select name='level'>
+									<option value='1'>2012/2013</option>
+									<option value='2'>2013/2014</option>
+									<option value='3'>2014/2015</option>
+									</select><br></br><br></br>
             <div class="post_box">
             	<img src="images/blog_image_02.jpg" alt="Image 1" />
                 <p class="post_meta"><span class="cat">Posted in <a href="#">CSS Templates</a>, <a href="#">Web Design</a></span> | Date: June 24, 2048</p>
@@ -82,32 +78,7 @@ function clearText(field)
                 <p>Nunc varius venenatis sem sed adipiscing. Mauris suscipit mauris in purus mattis placerat. Ut rhoncus imperdiet nibh sit amet sagittis. Aliquam erat volutpat. In pellentesque sagittis dictum. Aliquam erat volutpat. Donec ac aliquam neque.</p>
                 <a class="more" href="#"></a>
                 <div class="cleaner"></div>
-            </div>
-            <div class="post_box">
-            	<img src="images/blog_image_03.jpg" alt="Image 2" />
-                <p class="post_meta"><span class="cat">Posted in <a href="#">3D</a>, <a href="#">Interactive</a></span> | Date: June 18, 2048</p>
-                <h2>Duis eu lectus et ante accumsan auctor</h2>
-                <p> Aliquam erat volutpat. In pellentesque sagittis dictum. Aliquam erat volutpat. Donec ac aliquam neque. Sed tellus diam, consequat nec volutpat et, cursus ac nisi. Mauris in risus in diam consequat suscipit non ac enim. Aliquam erat volutpat.</p>
-                <a class="more" href="#"></a>
-                <div class="cleaner"></div>
-            </div>
-            <div class="post_box">
-	            <img src="images/blog_image_04.jpg" alt="Image 3" />
-                <p class="post_meta"><span class="cat">Posted in <a href="#">Marketing</a>, <a href="#">Advertising</a></span> | Date: May 28, 2048</p>
-              <h2>Aenean vulputate tempus sollicitudin</h2>
-                <p>Mauris suscipit mauris in purus mattis placerat. Ut rhoncus imperdiet nibh sit amet sagittis. Aliquam erat volutpat. In pellentesque sagittis dictum. Aliquam erat volutpat. Donec ac aliquam neque. Sed tellus diam. Vestibulum dictum tincidunt posuere.</p>
-                <a class="more" href="#"></a>
-              <div class="cleaner"></div>
-            </div>
-            <div class="post_box">
-            	<img src="images/blog_image_01.jpg" alt="Image 4" />
-                <p class="post_meta"><span class="cat">Posted in <a href="#">Illustrations</a>, <a href="#">Graphics</a></span> | Date: May 22, 2048</p>
-              <h2>Fusce vehicula consequat dignissim</h2>
-                <p>Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow"><strong>XHTML</strong></a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow"><strong>CSS</strong></a>. Ut rhoncus imperdiet nibh sit amet sagittis. Aliquam erat volutpat. In pellentesque sagittis dictum. Aliquam erat volutpat. Donec ac aliquam neque. Sed tellus diam, consequat nec volutpat et, cursus ac nisi.</p>
-                <a class="more" href="#"></a>
-                <div class="cleaner"></div>
-            </div>
-        
+            </div>     
         </div> <!-- end of content -->
     	<div class="cleaner"></div>
     </div> <!-- end of main -->

@@ -6,7 +6,7 @@ include "koneksi.php";
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>OSIS SMP NEGERI 3 SLEMAN | Adat </title>
+<title>OSIS SMP NEGERI 3 SLEMAN | Berita </title>
 <meta name="keywords" content="spicy, news, theme, webdesign, free templates, website templates, CSS, HTML" />
 <meta name="description" content="Spicy Theme News - free website template by templatemo.com" />
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
@@ -30,14 +30,14 @@ function clearText(field)
     
     	<div id="templatemo_sidebar">
         	
-           <div id="site_title"><h1><img src="images/smp_logo.jpg" width="220px" height="300px" /></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
+            <div id="site_title"><h1><img src="images/smp_logo.jpg" width="220px" height="300px" /></a><span>OSIS SMP NEGERI 3 SLEMAN</span></h1></div>
             
             <div id="templatemo_menu">
                 <ul>
                     <li><a href="index.php">Home</a></li>
 					<li><a href="profil.php">Profil</a></li>
 					<li><a href="berita.php">Berita</a></li>
-					<li><a href="artikel.php">Artikel</a></li>
+					<li><a href="artikel.php" class="current">Artikel</a></li>
                     <li><a href="galery.php">Gallery</a></li> 
 					<li><a href="Struktur.php">Struktur Organisasi</a></li>					
                     <li><a href="forum.php">Forum</a></li>
@@ -55,10 +55,10 @@ function clearText(field)
 				</div>
             </div>-->
             
-          <div class="sb_box">
+            <div class="sb_box">
             	<h3>Kontak</h3>
 				<?php	
-						include "koneksi.php";
+						
 						$sql = mysql_query("SELECT * FROM t_kontak");
 						while ($data = mysql_fetch_array($sql)){
 						list($idkontak,$alamat,$notlp,$email)=$data; 
@@ -73,17 +73,64 @@ function clearText(field)
         </div> <!-- end of sidebar -->
         
         <div id="templatemo_content">
-        	<div class="content_box">
-            	<h2>Adat OSIS</h2>
-				<?php	
-						$sql = mysql_query("SELECT * FROM t_adat ");
-						while ($data = mysql_fetch_array($sql)){
-						list($idadat,$adat)=$data; 
-				?>		
-						<p><?php echo $data['id_adat'];?>
-						. <?php echo $data['aturan']; } ?></p>			
-            </div>          
-        
+						<?php
+						$dataPerPage = 1;
+
+							// apabila $_GET['page'] sudah didefinisikan, gunakan nomor halaman tersebut,
+							// sedangkan apabila belum, nomor halamannya 1.
+							if(isset($_GET['page']))
+							{
+								$noPage = $_GET['page'];
+							}
+							else $noPage = 1;
+
+							// perhitungan offset
+							$offset = ($noPage - 1) * $dataPerPage;
+
+							// query SQL untuk menampilkan data perhalaman sesuai offset
+							$query = "SELECT * FROM t_artikel LIMIT $offset, $dataPerPage";
+							$result = mysql_query($query) or die('Error');
+
+							// menampilkan data 
+							while($data = mysql_fetch_array($result))
+							{	
+								list($idartikel,$judul,$isi,$penulis)=$data;
+								echo "<h2>".$data ['judul_artikel']."</h2>";
+								echo "<p>" .$isi. "</p><br></br>";
+								echo "<p align='right'> Penulis : </p>";
+								echo "<p align='right'>" .$data['penulis']. "</p>";
+								//echo '<p align="right" >' ."<a href='artikel2.php?page=$idartikel'>Continue Reading &raquo </a>". '</p><br></br>';
+							}
+
+							// mencari jumlah semua data dalam tabel guestbook
+							$query   = "SELECT COUNT(*) AS jumData FROM t_artikel";
+							$hasil  = mysql_query($query);
+							$data     = mysql_fetch_array($hasil);
+							$jumData = $data['jumData'];
+
+							// menentukan jumlah halaman yang muncul berdasarkan jumlah semua data
+							$jumPage = ceil($jumData/$dataPerPage);
+
+							// menampilkan link previous
+							if ($noPage > 1) echo  "<a href='".$_SERVER['PHP_SELF']."?page=".($noPage-1)."'>&lt;&lt; Prev</a>";
+
+							// memunculkan nomor halaman dan linknya
+							for($page = 1; $page <= $jumPage; $page++)
+							{
+									 if ((($page >= $noPage - 3) && ($page <= $noPage + 3)) || ($page == 1) || ($page == $jumPage))
+									 {
+										if (($showPage == 1) && ($page != 2))  echo "...";
+										if (($showPage != ($jumPage - 1)) && ($page == $jumPage))  echo "...";
+										if ($page == $noPage) echo " <b>".$page."</b> ";
+										else echo " <a href='".$_SERVER['PHP_SELF']."?page=".$page."'>".$page."</a> ";
+										$showPage = $page;
+									 }
+							}
+
+							// menampilkan link next
+							if ($noPage < $jumPage) echo "<a href='".$_SERVER['PHP_SELF']."?page=".($noPage+1)."'>Next &gt;&gt;</a>";
+
+							?>    
         </div> <!-- end of content -->
     	<div class="cleaner"></div>
     </div> <!-- end of main -->
